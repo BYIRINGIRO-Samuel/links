@@ -1,7 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 import { SectionHeading } from "./section-heading";
+import { Stagger, StaggerChild, scaleIn } from "./motion";
 
 /** Launch target — adjust when the real date is set */
 const LAUNCH_AT = new Date("2026-09-22T09:00:00+01:00").getTime();
@@ -56,37 +58,76 @@ export function Countdown() {
           description="We're putting the finishing touches on the platform. Reserve your spot before launch."
         />
 
-        <div
+        <Stagger
           className="mt-12 grid w-full max-w-[860px] grid-cols-4 gap-3 sm:gap-6"
-          role="timer"
-          aria-live="polite"
-          aria-label="Time until Links launches"
+          stagger={0.2}
         >
-          {units.map((unit) => (
-            <FlipCard
-              key={unit.key}
-              value={time ? pad(time[unit.key]) : "--"}
-              label={unit.label}
-            />
-          ))}
-        </div>
+          <div
+            className="contents"
+            role="timer"
+            aria-live="polite"
+            aria-label="Time until Links launches"
+          >
+            {units.map((unit, i) => (
+              <StaggerChild key={unit.key}>
+                <FlipCard
+                  value={time ? pad(time[unit.key]) : "--"}
+                  label={unit.label}
+                  index={i}
+                />
+              </StaggerChild>
+            ))}
+          </div>
+        </Stagger>
       </div>
     </section>
   );
 }
 
-function FlipCard({ value, label }: { value: string; label: string }) {
+function FlipCard({
+  value,
+  label,
+  index,
+}: {
+  value: string;
+  label: string;
+  index: number;
+}) {
   return (
-    <div className="flex flex-col items-center gap-3 sm:gap-4">
-      <div className="flip-card" aria-hidden="true">
-        <span className="flip-card__value font-sans">{value}</span>
+    <motion.div
+      className="flex flex-col items-center gap-3 sm:gap-4"
+      variants={scaleIn}
+      whileHover={{ y: -4, transition: { duration: 0.25 } }}
+    >
+      <motion.div
+        className="flip-card"
+        aria-hidden="true"
+        initial={{ rotateX: -90, opacity: 0 }}
+        whileInView={{ rotateX: 0, opacity: 1 }}
+        viewport={{ once: true }}
+        transition={{
+          type: "spring",
+          stiffness: 120,
+          damping: 18,
+          delay: index * 0.16,
+        }}
+      >
+        <motion.span
+          key={value}
+          className="flip-card__value font-sans"
+          initial={{ opacity: 0.4, y: -6 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.45 }}
+        >
+          {value}
+        </motion.span>
         <span className="flip-card__hinge flip-card__hinge--left" />
         <span className="flip-card__hinge flip-card__hinge--right" />
         <span className="flip-card__split" />
-      </div>
+      </motion.div>
       <span className="font-serif text-[clamp(0.85rem,2vw,1.05rem)] tracking-[-0.01em] text-muted">
         {label}
       </span>
-    </div>
+    </motion.div>
   );
 }

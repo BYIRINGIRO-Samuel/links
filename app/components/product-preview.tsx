@@ -1,4 +1,8 @@
+"use client";
+
 import Image from "next/image";
+import { motion } from "framer-motion";
+import { Reveal, fadeUp, slideLeft, slideRight } from "./motion";
 
 const cards = [
   {
@@ -18,6 +22,20 @@ const cards = [
   },
 ];
 
+const floatCard = {
+  hidden: { opacity: 0, y: 24, scale: 0.92 },
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: {
+      duration: 1.15,
+      delay: 0.45 + i * 0.22,
+      ease: [0.22, 1, 0.36, 1] as const,
+    },
+  }),
+};
+
 export function ProductPreview() {
   return (
     <section
@@ -25,7 +43,7 @@ export function ProductPreview() {
       className="section-pad relative scroll-mt-24 overflow-hidden bg-white px-6"
     >
       <div className="relative z-10 mx-auto max-w-7xl">
-        <div className="mx-auto mb-10 max-w-2xl text-center sm:mb-12">
+        <Reveal variant={fadeUp} className="mx-auto mb-10 max-w-2xl text-center sm:mb-12">
           <p className="mb-4 text-[12px] font-medium uppercase tracking-[0.28em] text-accent">
             Preview
           </p>
@@ -39,47 +57,117 @@ export function ProductPreview() {
             A fast, branded public page from one URL — built for creators who
             want control, speed, and ownership.
           </p>
-        </div>
+        </Reveal>
 
         {/* Mobile */}
         <div className="mx-auto flex max-w-md flex-col items-center gap-5 lg:hidden">
-          <Image
-            src="/links-phone-hand.png"
-            alt="Hand holding a phone showing a Links profile"
-            width={1200}
-            height={1600}
-            className="h-auto max-h-[380px] w-auto bg-transparent object-contain"
-            priority
-          />
+          <motion.div
+            initial={{ opacity: 0, y: 40, scale: 0.95 }}
+            whileInView={{ opacity: 1, y: 0, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1.25, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <Image
+              src="/links-phone-hand.png"
+              alt="Hand holding a phone showing a Links profile"
+              width={1200}
+              height={1600}
+              className="h-auto max-h-[380px] w-auto bg-transparent object-contain"
+              priority
+            />
+          </motion.div>
           <div className="flex w-full flex-col items-center gap-3">
-            {cards.map((card) => (
-              <PillCard key={card.title} card={card} />
+            {cards.map((card, i) => (
+              <motion.div
+                key={card.title}
+                custom={i}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                variants={floatCard}
+              >
+                <PillCard card={card} />
+              </motion.div>
             ))}
           </div>
         </div>
 
         {/* Desktop */}
         <div className="relative mx-auto hidden min-h-[460px] max-w-5xl lg:block">
-          <div className="absolute left-1/2 top-1/2 z-20 -translate-x-1/2 -translate-y-1/2">
-            <Image
-              src="/links-phone-hand.png"
-              alt="Hand holding a phone showing a Links profile"
-              width={1200}
-              height={1600}
-              className="h-auto max-h-[440px] w-auto bg-transparent object-contain drop-shadow-[0_20px_40px_rgba(0,0,0,0.1)] xl:max-h-[480px]"
-              priority
-            />
-          </div>
+          <motion.div
+            className="absolute left-1/2 top-1/2 z-20 -translate-x-1/2 -translate-y-1/2"
+            initial={{ opacity: 0, y: 60, scale: 0.88 }}
+            whileInView={{ opacity: 1, y: 0, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{
+              duration: 1.4,
+              ease: [0.22, 1, 0.36, 1],
+            }}
+          >
+            <motion.div
+              animate={{ y: [0, -10, 0] }}
+              transition={{
+                duration: 5,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
+            >
+              <Image
+                src="/links-phone-hand.png"
+                alt="Hand holding a phone showing a Links profile"
+                width={1200}
+                height={1600}
+                className="h-auto max-h-[440px] w-auto bg-transparent object-contain drop-shadow-[0_20px_40px_rgba(0,0,0,0.1)] xl:max-h-[480px]"
+                priority
+              />
+            </motion.div>
+          </motion.div>
 
-          <div className="absolute left-[4%] top-[12%] z-30 -rotate-3 xl:left-[8%]">
-            <PillCard card={cards[0]} />
-          </div>
-          <div className="absolute bottom-[10%] left-[6%] z-30 rotate-2 xl:left-[10%]">
-            <PillCard card={cards[1]} />
-          </div>
-          <div className="absolute right-[4%] top-[22%] z-30 rotate-3 xl:right-[8%]">
-            <PillCard card={cards[2]} />
-          </div>
+          <motion.div
+            className="absolute left-[4%] top-[12%] z-30 -rotate-3 xl:left-[8%]"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={slideLeft}
+            custom={0}
+          >
+            <motion.div
+              animate={{ y: [0, -6, 0], rotate: [-3, -1, -3] }}
+              transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut" }}
+            >
+              <PillCard card={cards[0]} />
+            </motion.div>
+          </motion.div>
+          <motion.div
+            className="absolute bottom-[10%] left-[6%] z-30 rotate-2 xl:left-[10%]"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={slideLeft}
+            transition={{ delay: 0.25 }}
+          >
+            <motion.div
+              animate={{ y: [0, 8, 0], rotate: [2, 4, 2] }}
+              transition={{ duration: 5.2, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
+            >
+              <PillCard card={cards[1]} />
+            </motion.div>
+          </motion.div>
+          <motion.div
+            className="absolute right-[4%] top-[22%] z-30 rotate-3 xl:right-[8%]"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={slideRight}
+            transition={{ delay: 0.4 }}
+          >
+            <motion.div
+              animate={{ y: [0, -8, 0], rotate: [3, 1, 3] }}
+              transition={{ duration: 4.8, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+            >
+              <PillCard card={cards[2]} />
+            </motion.div>
+          </motion.div>
         </div>
       </div>
     </section>

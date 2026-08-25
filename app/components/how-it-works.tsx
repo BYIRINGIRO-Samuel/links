@@ -1,3 +1,8 @@
+"use client";
+
+import { motion } from "framer-motion";
+import { Reveal, Stagger, StaggerChild, scaleIn } from "./motion";
+
 const steps = [
   {
     verb: "Claim",
@@ -23,77 +28,131 @@ export function HowItWorks() {
       className="section-pad relative scroll-mt-24 overflow-hidden bg-[#121212] px-6"
     >
       <div className="relative z-10 mx-auto max-w-lg">
-        <div className="mb-14 flex items-center gap-3 sm:gap-4">
-          <span className="h-px flex-1 bg-accent" />
-          <span className="size-1.5 shrink-0 rounded-full bg-accent" />
+        <Reveal className="mb-14 flex items-center gap-3 sm:gap-4">
+          <motion.span
+            className="h-px flex-1 bg-accent"
+            initial={{ scaleX: 0 }}
+            whileInView={{ scaleX: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1.3, ease: [0.22, 1, 0.36, 1] }}
+            style={{ originX: 1 }}
+          />
+          <motion.span
+            className="size-1.5 shrink-0 rounded-full bg-accent"
+            initial={{ scale: 0 }}
+            whileInView={{ scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ type: "spring", stiffness: 280, damping: 16, delay: 0.35 }}
+          />
           <h2 className="shrink-0 px-1 text-center text-[clamp(1.5rem,4vw,2rem)] font-semibold tracking-[-0.03em] text-white">
             How It{" "}
             <span className="font-serif font-normal italic tracking-[-0.02em]">
               works
             </span>
           </h2>
-          <span className="size-1.5 shrink-0 rounded-full bg-accent" />
-          <span className="h-px flex-1 bg-accent" />
-        </div>
+          <motion.span
+            className="size-1.5 shrink-0 rounded-full bg-accent"
+            initial={{ scale: 0 }}
+            whileInView={{ scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ type: "spring", stiffness: 280, damping: 16, delay: 0.35 }}
+          />
+          <motion.span
+            className="h-px flex-1 bg-accent"
+            initial={{ scaleX: 0 }}
+            whileInView={{ scaleX: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1.3, ease: [0.22, 1, 0.36, 1] }}
+            style={{ originX: 0 }}
+          />
+        </Reveal>
 
         <div className="relative mx-auto">
-          {/* Centered vertical rail */}
-          <div
+          <motion.div
             className="absolute bottom-8 left-1/2 top-3 w-px -translate-x-1/2 bg-accent"
             aria-hidden="true"
+            initial={{ scaleY: 0 }}
+            whileInView={{ scaleY: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1.8, ease: [0.22, 1, 0.36, 1], delay: 0.25 }}
+            style={{ originY: 0 }}
           />
 
-          {/* Start */}
-          <div className="relative z-10 mb-10 flex items-center justify-center gap-3">
-            <div className="relative flex size-5 items-center justify-center">
+          <Reveal className="relative z-10 mb-10 flex items-center justify-center gap-3">
+            <motion.div
+              className="relative flex size-5 items-center justify-center"
+              initial={{ scale: 0 }}
+              whileInView={{ scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ type: "spring", stiffness: 320, damping: 16 }}
+            >
               <span className="absolute size-9 rounded-full border border-accent/20" />
               <span className="absolute size-6 rounded-full border border-accent/35" />
               <span className="relative size-2.5 rounded-full bg-accent shadow-[0_0_12px_rgba(34,197,94,0.7)]" />
-            </div>
+            </motion.div>
             <p className="absolute left-[calc(50%+18px)] text-[13px] font-medium tracking-[-0.01em] text-white/80">
               Start
             </p>
-          </div>
+          </Reveal>
 
-          {/* Steps — cards centered on the line */}
-          <ol className="relative space-y-8">
-            {steps.map((step) => (
-              <li key={step.verb} className="relative">
-                <span
-                  className="absolute left-1/2 top-[-16px] z-10 -translate-x-1/2 text-accent"
-                  aria-hidden="true"
-                >
-                  <svg width="12" height="10" viewBox="0 0 12 10" fill="none">
-                    <path d="M6 10L0.5 0.5h11L6 10Z" fill="currentColor" />
-                  </svg>
-                </span>
+          <Stagger className="relative space-y-8" stagger={0.28}>
+            <ol className="relative space-y-8">
+              {steps.map((step, i) => (
+                <StaggerChild key={step.verb}>
+                  <li className="relative">
+                    <motion.span
+                      className="absolute left-1/2 top-[-16px] z-10 -translate-x-1/2 text-accent"
+                      aria-hidden="true"
+                      initial={{ y: -12, opacity: 0 }}
+                      whileInView={{ y: 0, opacity: 1 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: 0.2 + i * 0.22, duration: 0.85 }}
+                    >
+                      <svg width="12" height="10" viewBox="0 0 12 10" fill="none">
+                        <path d="M6 10L0.5 0.5h11L6 10Z" fill="currentColor" />
+                      </svg>
+                    </motion.span>
 
-                <div className="relative z-10 mx-auto flex w-full max-w-[340px] items-center gap-4 rounded-xl border border-white/8 bg-[#1e1e1e] px-5 py-4 sm:gap-5 sm:px-6 sm:py-5">
-                  <span className="flex size-10 shrink-0 items-center justify-center text-white/90">
-                    <StepIcon name={step.icon} />
-                  </span>
-                  <p className="text-[14px] leading-relaxed text-white/70 sm:text-[15px]">
-                    <span className="font-medium text-white">{step.verb}</span>
-                    {" — "}
-                    {step.body}
-                  </p>
-                </div>
-              </li>
-            ))}
-          </ol>
+                    <motion.div
+                      className="relative z-10 mx-auto flex w-full max-w-[340px] items-center gap-4 rounded-xl border border-white/8 bg-[#1e1e1e] px-5 py-4 sm:gap-5 sm:px-6 sm:py-5"
+                      whileHover={{
+                        scale: 1.02,
+                        borderColor: "rgba(34,197,94,0.25)",
+                        transition: { duration: 0.25 },
+                      }}
+                    >
+                      <span className="flex size-10 shrink-0 items-center justify-center text-white/90">
+                        <StepIcon name={step.icon} />
+                      </span>
+                      <p className="text-[14px] leading-relaxed text-white/70 sm:text-[15px]">
+                        <span className="font-medium text-white">{step.verb}</span>
+                        {" — "}
+                        {step.body}
+                      </p>
+                    </motion.div>
+                  </li>
+                </StaggerChild>
+              ))}
+            </ol>
+          </Stagger>
 
-          {/* End with thorn-border tick */}
-          <div className="relative z-10 mt-10 flex items-center justify-center gap-4">
-            <div className="relative flex shrink-0 items-center justify-center">
+          <Reveal variant={scaleIn} className="relative z-10 mt-10 flex items-center justify-center gap-4">
+            <motion.div
+              className="relative flex shrink-0 items-center justify-center"
+              initial={{ scale: 0, rotate: -180 }}
+              whileInView={{ scale: 1, rotate: 0 }}
+              viewport={{ once: true }}
+              transition={{ type: "spring", stiffness: 140, damping: 16, delay: 0.5 }}
+            >
               <ThornCheck />
-            </div>
+            </motion.div>
             <p className="max-w-[240px] text-[14px] leading-relaxed sm:text-[15px]">
               <span className="font-semibold text-accent">Once published</span>
               <span className="text-white">
                 , congratulations — your personal website is live.
               </span>
             </p>
-          </div>
+          </Reveal>
         </div>
       </div>
     </section>
@@ -101,7 +160,6 @@ export function HowItWorks() {
 }
 
 function ThornCheck() {
-  // Soft-spike circular seal (fully rounded thorns)
   const spikes = 16;
   const outer = 20;
   const inner = 15.5;

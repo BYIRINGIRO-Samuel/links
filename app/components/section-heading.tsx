@@ -1,3 +1,7 @@
+"use client";
+
+import { Reveal, fadeUp } from "./motion";
+
 type SectionHeadingProps = {
   eyebrow?: string;
   title: string;
@@ -20,13 +24,9 @@ export function SectionHeading({
   const alignClass = align === "left" ? "text-left" : "text-center";
 
   return (
-    <div className={`mx-auto max-w-2xl ${alignClass} ${className}`}>
+    <Reveal variant={fadeUp} className={`mx-auto max-w-2xl ${alignClass} ${className}`}>
       {eyebrow ? (
-        <p
-          className={`mb-4 text-[12px] font-medium uppercase tracking-[0.28em] ${
-            dark ? "text-accent" : "text-accent"
-          }`}
-        >
+        <p className="mb-4 text-[12px] font-medium uppercase tracking-[0.28em] text-accent">
           {eyebrow}
         </p>
       ) : null}
@@ -54,6 +54,6 @@ export function SectionHeading({
           {description}
         </p>
       ) : null}
-    </div>
+    </Reveal>
   );
 }

@@ -1,4 +1,7 @@
+"use client";
+
 import Image from "next/image";
+import { motion, useReducedMotion } from "framer-motion";
 import { WaitlistForm } from "./waitlist-form";
 
 const avatars = [
@@ -7,7 +10,38 @@ const avatars = [
   { src: "/avatars/c.svg", alt: "" },
 ];
 
+const ease = [0.22, 1, 0.36, 1] as const;
+
+const heroStagger = {
+  hidden: {},
+  visible: {
+    transition: { staggerChildren: 0.16, delayChildren: 0.25 },
+  },
+};
+
+const heroItem = {
+  hidden: { opacity: 0, y: 32, filter: "blur(6px)" },
+  visible: {
+    opacity: 1,
+    y: 0,
+    filter: "blur(0px)",
+    transition: { duration: 1.2, ease },
+  },
+};
+
+const logoItem = {
+  hidden: { opacity: 0, scale: 0.5, rotate: -12 },
+  visible: {
+    opacity: 1,
+    scale: 1,
+    rotate: 0,
+    transition: { type: "spring" as const, stiffness: 180, damping: 20 },
+  },
+};
+
 export function Hero() {
+  const reduce = useReducedMotion();
+
   return (
     <section
       id="hero"
@@ -21,72 +55,88 @@ export function Hero() {
         <span className="hero-cloud right-[18%] bottom-[12%] h-[180px] w-[320px] bg-[radial-gradient(circle,rgba(34,197,94,0.12)_0%,transparent_70%)] [animation-delay:-12s]" />
       </div>
 
-      <div className="relative z-10 mx-auto flex w-full max-w-[640px] flex-col items-center text-center">
-        <div
-          className="animate-fade-up mb-8 flex size-[56px] items-center justify-center rounded-full bg-foreground text-surface shadow-[var(--shadow-logo)] ring-4 ring-accent/25"
-          style={{ animationDelay: "0ms" }}
+      <motion.div
+        className="relative z-10 mx-auto flex w-full max-w-[640px] flex-col items-center text-center"
+        initial={reduce ? "visible" : "hidden"}
+        animate="visible"
+        variants={heroStagger}
+      >
+        <motion.div
+          variants={logoItem}
+          className="mb-8 flex size-[56px] items-center justify-center rounded-full bg-foreground text-surface shadow-[var(--shadow-logo)] ring-4 ring-accent/25"
           aria-label="Links"
         >
           <LinksMark />
-        </div>
+        </motion.div>
 
-        <div
-          className="animate-fade-up mb-5 flex items-center gap-2"
-          style={{ animationDelay: "80ms" }}
+        <motion.div
+          variants={heroItem}
+          className="mb-5 flex items-center gap-2"
         >
           <span className="animate-pulse-dot size-2 rounded-full bg-accent" />
           <span className="text-[13px] font-medium tracking-[-0.01em] text-foreground">
             Links goes live soon
           </span>
-        </div>
+        </motion.div>
 
-        <h1
-          className="animate-fade-up max-w-[15ch] text-[clamp(2.5rem,7vw,3.85rem)] font-semibold leading-[1.05] tracking-[-0.045em] text-foreground"
-          style={{ animationDelay: "160ms" }}
+        <motion.h1
+          variants={heroItem}
+          className="max-w-[15ch] text-[clamp(2.5rem,7vw,3.85rem)] font-semibold leading-[1.05] tracking-[-0.045em] text-foreground"
         >
           Your personal website in{" "}
-          <span className="font-serif text-[1.06em] font-normal tracking-[-0.02em] text-accent">
+          <motion.span
+            className="font-serif text-[1.06em] font-normal tracking-[-0.02em] text-accent"
+            initial={reduce ? false : { opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.85, duration: 1, ease }}
+          >
             60 seconds
-          </span>
-        </h1>
+          </motion.span>
+        </motion.h1>
 
-        <p
-          className="animate-fade-up mt-5 max-w-[38ch] text-[clamp(0.98rem,2vw,1.1rem)] leading-[1.6] text-muted"
-          style={{ animationDelay: "240ms" }}
+        <motion.p
+          variants={heroItem}
+          className="mt-5 max-w-[38ch] text-[clamp(0.98rem,2vw,1.1rem)] leading-[1.6] text-muted"
         >
           A fast, branded public destination from one URL — customize deeply,
           measure privately, and own every link.
-        </p>
+        </motion.p>
 
-        <div
+        <motion.div
           id="waitlist"
-          className="animate-fade-up mt-9 w-full scroll-mt-28"
-          style={{ animationDelay: "320ms" }}
+          variants={heroItem}
+          className="mt-9 w-full scroll-mt-28"
         >
           <WaitlistForm />
-        </div>
+        </motion.div>
 
-        <div
-          className="animate-fade-up mt-6 flex items-center gap-3"
-          style={{ animationDelay: "400ms" }}
+        <motion.div
+          variants={heroItem}
+          className="mt-6 flex items-center gap-3"
         >
           <div className="flex -space-x-2.5" aria-hidden="true">
-            {avatars.map((avatar) => (
-              <Image
+            {avatars.map((avatar, i) => (
+              <motion.div
                 key={avatar.src}
-                src={avatar.src}
-                alt={avatar.alt}
-                width={28}
-                height={28}
-                className="size-7 rounded-full border-2 border-background object-cover"
-              />
+                initial={reduce ? false : { opacity: 0, x: -12 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 1.1 + i * 0.12, duration: 0.85, ease }}
+              >
+                <Image
+                  src={avatar.src}
+                  alt={avatar.alt}
+                  width={28}
+                  height={28}
+                  className="size-7 rounded-full border-2 border-background object-cover"
+                />
+              </motion.div>
             ))}
           </div>
           <p className="text-[13px] tracking-[-0.01em] text-muted">
             Join creators, brands &amp; builders
           </p>
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
     </section>
   );
 }

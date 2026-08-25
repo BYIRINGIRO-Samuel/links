@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 
 const links = [
   { href: "#hero", label: "Home" },
@@ -48,10 +49,13 @@ export function Navbar() {
 
   return (
     <>
-      <header
+      <motion.header
         className={`fixed inset-x-0 top-0 z-50 flex justify-center px-4 pt-4 transition-all duration-300 ${
           scrolled ? "pt-3" : "pt-5"
         }`}
+        initial={{ y: -80, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1], delay: 1.1 }}
       >
         <nav
           className={`flex w-full max-w-5xl items-center justify-between gap-4 rounded-full border px-3 py-2 transition-all duration-300 ${
@@ -83,8 +87,10 @@ export function Navbar() {
                   className="group relative flex items-center gap-2 rounded-full px-3.5 py-1.5 text-[13px] text-muted transition-colors hover:text-foreground"
                 >
                   {isActive ? (
-                    <span
+                    <motion.span
                       className="nav-active-pill"
+                      layoutId="nav-active"
+                      transition={{ type: "spring", stiffness: 380, damping: 28 }}
                       aria-hidden="true"
                     />
                   ) : null}
@@ -101,12 +107,14 @@ export function Navbar() {
           </div>
 
           <div className="flex items-center gap-2">
-            <a
+            <motion.a
               href="#waitlist"
               className="rounded-full bg-accent px-4 py-2 text-[13px] font-semibold text-foreground shadow-[0_10px_24px_rgba(34,197,94,0.35)] transition-transform hover:-translate-y-0.5"
+              whileHover={{ scale: 1.04 }}
+              whileTap={{ scale: 0.97 }}
             >
               Join Waitlist
-            </a>
+            </motion.a>
             <button
               type="button"
               className="flex size-9 items-center justify-center rounded-full border border-black/8 md:hidden"
@@ -122,30 +130,41 @@ export function Navbar() {
             </button>
           </div>
         </nav>
-      </header>
+      </motion.header>
 
-      {open ? (
-        <div className="fixed inset-x-4 top-[4.5rem] z-50 rounded-[24px] border border-black/8 bg-white/95 p-3 shadow-[0_20px_50px_rgba(0,0,0,0.12)] backdrop-blur-xl md:hidden">
-          {links.slice(1).map((link) => {
-            const isActive = active === link.href;
-            return (
-              <a
-                key={link.href}
-                href={link.href}
-                onClick={() => setOpen(false)}
-                className="flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-medium text-foreground hover:bg-black/[0.03]"
-              >
-                {isActive ? (
-                  <span className="nav-active-pill" aria-hidden="true" />
-                ) : (
-                  <span className="size-2.5 rounded-full bg-black/15" />
-                )}
-                {link.label}
-              </a>
-            );
-          })}
-        </div>
-      ) : null}
+      <AnimatePresence>
+        {open ? (
+          <motion.div
+            className="fixed inset-x-4 top-[4.5rem] z-50 rounded-[24px] border border-black/8 bg-white/95 p-3 shadow-[0_20px_50px_rgba(0,0,0,0.12)] backdrop-blur-xl md:hidden"
+            initial={{ opacity: 0, y: -12, scale: 0.96 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -12, scale: 0.96 }}
+            transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+          >
+            {links.slice(1).map((link, i) => {
+              const isActive = active === link.href;
+              return (
+                <motion.a
+                  key={link.href}
+                  href={link.href}
+                  onClick={() => setOpen(false)}
+                  className="flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-medium text-foreground hover:bg-black/[0.03]"
+                  initial={{ opacity: 0, x: -12 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: i * 0.05, duration: 0.3 }}
+                >
+                  {isActive ? (
+                    <span className="nav-active-pill" aria-hidden="true" />
+                  ) : (
+                    <span className="size-2.5 rounded-full bg-black/15" />
+                  )}
+                  {link.label}
+                </motion.a>
+              );
+            })}
+          </motion.div>
+        ) : null}
+      </AnimatePresence>
     </>
   );
 }

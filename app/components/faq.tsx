@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import { Reveal, Stagger, StaggerChild, fadeUp } from "./motion";
 
 const faqs = [
   {
@@ -34,7 +36,7 @@ export function Faq() {
 
   return (
     <section id="faq" className="section-pad scroll-mt-24 bg-[#f3f4f2] px-6">
-      <div className="mx-auto max-w-2xl text-center">
+      <Reveal variant={fadeUp} className="mx-auto max-w-2xl text-center">
         <p className="mb-4 text-[12px] font-medium uppercase tracking-[0.28em] text-accent">
           FAQ
         </p>
@@ -44,45 +46,62 @@ export function Faq() {
             answered
           </span>
         </h2>
-      </div>
+      </Reveal>
 
-      <div className="mx-auto mt-12 flex max-w-2xl flex-col gap-3">
+      <Stagger className="mx-auto mt-12 flex max-w-2xl flex-col gap-3" stagger={0.14}>
         {faqs.map((item, index) => {
           const isOpen = open === index;
           return (
-            <div
-              key={item.q}
-              className="rounded-[4px] border border-black/12 bg-transparent px-4 py-3.5 backdrop-blur-[2px] sm:px-5"
-            >
-              <button
-                type="button"
-                onClick={() => setOpen(isOpen ? null : index)}
-                className="flex w-full items-center justify-between gap-4 text-left"
-                aria-expanded={isOpen}
+            <StaggerChild key={item.q}>
+              <motion.div
+                className="rounded-[4px] border border-black/12 bg-transparent px-4 py-3.5 backdrop-blur-[2px] sm:px-5"
+                layout
+                whileHover={{ borderColor: "rgba(34,197,94,0.3)" }}
+                transition={{ duration: 0.2 }}
               >
-                <span className="text-[14px] font-medium leading-snug tracking-[-0.01em] text-foreground sm:text-[15px]">
-                  {item.q}
-                </span>
-                <span
-                  className={`flex size-8 shrink-0 items-center justify-center rounded-full text-[16px] transition-all duration-300 ${
-                    isOpen
-                      ? "rotate-45 bg-accent text-foreground"
-                      : "bg-foreground text-white"
-                  }`}
-                  aria-hidden="true"
+                <button
+                  type="button"
+                  onClick={() => setOpen(isOpen ? null : index)}
+                  className="flex w-full items-center justify-between gap-4 text-left"
+                  aria-expanded={isOpen}
                 >
-                  +
-                </span>
-              </button>
-              {isOpen ? (
-                <p className="mt-3 pr-10 text-[14px] leading-relaxed text-muted sm:text-[15px]">
-                  {item.a}
-                </p>
-              ) : null}
-            </div>
+                  <span className="text-[14px] font-medium leading-snug tracking-[-0.01em] text-foreground sm:text-[15px]">
+                    {item.q}
+                  </span>
+                  <motion.span
+                    className={`flex size-8 shrink-0 items-center justify-center rounded-full text-[16px] ${
+                      isOpen
+                        ? "bg-accent text-foreground"
+                        : "bg-foreground text-white"
+                    }`}
+                    animate={{ rotate: isOpen ? 45 : 0 }}
+                    transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+                    aria-hidden="true"
+                  >
+                    +
+                  </motion.span>
+                </button>
+                <AnimatePresence initial={false}>
+                  {isOpen ? (
+                    <motion.div
+                      key="content"
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: "auto", opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+                      className="overflow-hidden"
+                    >
+                      <p className="mt-3 pr-10 text-[14px] leading-relaxed text-muted sm:text-[15px]">
+                        {item.a}
+                      </p>
+                    </motion.div>
+                  ) : null}
+                </AnimatePresence>
+              </motion.div>
+            </StaggerChild>
           );
         })}
-      </div>
+      </Stagger>
     </section>
   );
 }
