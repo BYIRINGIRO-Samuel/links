@@ -98,8 +98,8 @@ export function Hero() {
           variants={heroItem}
           className="mt-5 max-w-[38ch] text-[clamp(0.98rem,2vw,1.1rem)] leading-[1.6] text-muted"
         >
-          A fast, branded public destination from one URL — customize deeply,
-          measure privately, and own every link.
+          One link that opens your personal website. Make it yours, see what
+          works, and keep full control of your content.
         </motion.p>
 
         <motion.div
