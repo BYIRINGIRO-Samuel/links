@@ -81,25 +81,26 @@ export function Hero() {
 
         <motion.h1
           variants={heroItem}
-          className="max-w-[15ch] text-[clamp(2.5rem,7vw,3.85rem)] font-semibold leading-[1.05] tracking-[-0.045em] text-foreground"
+          className="max-w-[16ch] text-[clamp(2.5rem,7vw,3.85rem)] font-semibold leading-[1.05] tracking-[-0.045em] text-foreground"
         >
-          Your personal website in{" "}
+          One link for{" "}
           <motion.span
             className="font-serif text-[1.06em] font-normal tracking-[-0.02em] text-accent"
             initial={reduce ? false : { opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.85, duration: 1, ease }}
           >
-            60 seconds
+            everything you share
           </motion.span>
         </motion.h1>
 
         <motion.p
           variants={heroItem}
-          className="mt-5 max-w-[38ch] text-[clamp(0.98rem,2vw,1.1rem)] leading-[1.6] text-muted"
+          className="mt-5 max-w-[42ch] text-[clamp(0.98rem,2vw,1.1rem)] leading-[1.6] text-muted"
         >
-          One link that opens your personal website. Make it yours, see what
-          works, and keep full control of your content.
+          Links is your personal page in one URL — put your work, socials, and
+          offers in one place, track what people click, and keep full ownership
+          of your content.
         </motion.p>
 
         <motion.div

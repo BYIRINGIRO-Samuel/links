@@ -37,8 +37,8 @@ export function Footer() {
             </span>
           </div>
           <p className="text-[13px] text-muted">
-            &copy; {new Date().getFullYear()} Links. Your personal website, in 60
-            seconds.
+            &copy; {new Date().getFullYear()} Links. One link for everything you
+            share.
           </p>
         </div>
       </footer>

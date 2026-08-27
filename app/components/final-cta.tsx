@@ -22,8 +22,8 @@ export function FinalCta() {
             Early access
           </p>
           <h2 className="mt-4 text-[clamp(2rem,5vw,3rem)] font-semibold leading-[1.08] tracking-[-0.04em]">
-            Be first to build your{" "}
-            <span className="font-serif font-normal text-accent">personal web</span>
+            Be first to share{" "}
+            <span className="font-serif font-normal text-accent">everything from one link</span>
           </h2>
           <p className="mt-4 text-[clamp(0.95rem,1.8vw,1.05rem)] leading-relaxed text-white/60">
             Join the waitlist for early access, launch updates, and

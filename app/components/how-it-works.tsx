@@ -6,17 +6,17 @@ import { Reveal, Stagger, StaggerChild, scaleIn } from "./motion";
 const steps = [
   {
     verb: "Claim",
-    body: "Pick a username, add your bio and avatar — your branded profile URL is ready in seconds.",
+    body: "Pick a username, add your bio and avatar — your branded page URL is ready in minutes.",
     icon: "user" as const,
   },
   {
     verb: "Build",
-    body: "Drag links, media, forms, and folders into place, then customize themes until it feels like you.",
+    body: "Add links, sell digital products and courses, take bookings, grow your email list, and style your page.",
     icon: "blocks" as const,
   },
   {
-    verb: "Publish",
-    body: "Go live and share one link everywhere. Track clicks and grow with privacy-first analytics.",
+    verb: "Earn",
+    body: "Go live with one link. Accept checkout, run memberships, use AutoDM, and track what converts.",
     icon: "share" as const,
   },
 ];
@@ -149,7 +149,7 @@ export function HowItWorks() {
             <p className="max-w-[240px] text-[14px] leading-relaxed sm:text-[15px]">
               <span className="font-semibold text-accent">Once published</span>
               <span className="text-white">
-                , congratulations — your personal website is live.
+                , congratulations — your page is live and ready to share.
               </span>
             </p>
           </Reveal>

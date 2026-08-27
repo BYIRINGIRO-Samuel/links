@@ -21,9 +21,9 @@ const instrumentSerif = Instrument_Serif({
 });
 
 export const metadata: Metadata = {
-  title: "Links — Your personal website in 60 seconds",
+  title: "Links — One link for everything you share",
   description:
-    "A fast, branded link-in-bio and personal site. Customize deeply, measure privately, and own every link from one URL.",
+    "Your personal page in one URL. Share work, socials, and offers, sell products and courses, book clients, track clicks, and keep full ownership of your content.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
