@@ -52,11 +52,28 @@ export function Countdown() {
       <div className="countdown-clouds" aria-hidden="true" />
 
       <div className="relative z-10 mx-auto flex max-w-5xl flex-col items-center">
-        <SectionHeading
-          title="Links"
-          accent="goes live soon"
-          description="We're putting the finishing touches on the platform. Reserve your spot before launch."
-        />
+        <div className="flex flex-col items-center text-center">
+          <div className="mb-6 flex items-center gap-3 rounded-full bg-foreground/5 p-1.5 pr-5 ring-1 ring-foreground/10">
+            <div
+              className="flex size-10 items-center justify-center rounded-full bg-foreground text-surface shadow-[var(--shadow-logo)]"
+              aria-label="Links"
+            >
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path d="M10.5 13.5a4.5 4.5 0 0 0 6.36.5l2.12-2.12a4.5 4.5 0 1 0-6.36-6.36l-1.2 1.2" stroke="currentColor" strokeWidth="2.1" strokeLinecap="round" strokeLinejoin="round" />
+                <path d="M13.5 10.5a4.5 4.5 0 0 0-6.36-.5L5 12.12a4.5 4.5 0 1 0 6.36 6.36l1.2-1.2" stroke="currentColor" strokeWidth="2.1" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="animate-pulse-dot size-2 rounded-full bg-accent" />
+              <span className="text-[13px] font-medium tracking-[-0.01em] text-foreground">
+                Links goes live soon
+              </span>
+            </div>
+          </div>
+          <p className="max-w-xl text-[clamp(0.95rem,1.8vw,1.05rem)] leading-relaxed text-muted">
+            We're putting the finishing touches on the platform. Reserve your spot before launch.
+          </p>
+        </div>
 
         <Stagger
           className="mt-12 grid w-full max-w-[860px] grid-cols-4 gap-3 sm:gap-6"

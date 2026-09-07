@@ -45,7 +45,7 @@ export function Hero() {
   return (
     <section
       id="hero"
-      className="relative flex min-h-[88dvh] flex-1 items-center justify-center overflow-hidden px-6 pb-20 pt-28"
+      className="relative flex min-h-[88dvh] flex-1 items-center justify-center overflow-hidden px-6 sm:px-12 lg:px-20 pb-20 pt-28"
     >
       <div className="hero-mist" aria-hidden="true">
         <span className="hero-cloud left-[-8%] top-[28%] h-[280px] w-[420px] bg-[radial-gradient(circle,rgba(160,160,160,0.5)_0%,transparent_70%)]" />
@@ -55,89 +55,103 @@ export function Hero() {
         <span className="hero-cloud right-[18%] bottom-[12%] h-[180px] w-[320px] bg-[radial-gradient(circle,rgba(34,197,94,0.12)_0%,transparent_70%)] [animation-delay:-12s]" />
       </div>
 
-      <motion.div
-        className="relative z-10 mx-auto flex w-full max-w-[640px] flex-col items-center text-center"
-        initial={reduce ? "visible" : "hidden"}
-        animate="visible"
-        variants={heroStagger}
-      >
+      <div className="relative z-10 mx-auto flex w-full max-w-[85rem] flex-col items-center gap-12 lg:flex-row lg:items-center lg:justify-between lg:gap-16 xl:gap-24">
+        {/* Left Column (Content) */}
         <motion.div
-          variants={logoItem}
-          className="mb-8 flex size-[56px] items-center justify-center rounded-full bg-foreground text-surface shadow-[var(--shadow-logo)] ring-4 ring-accent/25"
-          aria-label="Links"
+          className="flex flex-1 flex-col items-center text-center lg:items-start lg:text-left"
+          initial={reduce ? "visible" : "hidden"}
+          animate="visible"
+          variants={heroStagger}
         >
-          <LinksMark />
-        </motion.div>
+          {/* Logo and Live Soon Badge removed per request */}
 
-        <motion.div
-          variants={heroItem}
-          className="mb-5 flex items-center gap-2"
-        >
-          <span className="animate-pulse-dot size-2 rounded-full bg-accent" />
-          <span className="text-[13px] font-medium tracking-[-0.01em] text-foreground">
-            Links goes live soon
-          </span>
-        </motion.div>
-
-        <motion.h1
-          variants={heroItem}
-          className="max-w-[16ch] text-[clamp(2.5rem,7vw,3.85rem)] font-semibold leading-[1.05] tracking-[-0.045em] text-foreground"
-        >
-          One link for{" "}
-          <motion.span
-            className="font-serif text-[1.06em] font-normal tracking-[-0.02em] text-accent"
-            initial={reduce ? false : { opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.85, duration: 1, ease }}
+          <motion.h1
+            variants={heroItem}
+            className="max-w-[16ch] text-[clamp(2.5rem,7vw,4.5rem)] font-semibold leading-[1.05] tracking-[-0.045em] text-foreground lg:max-w-[15ch]"
           >
-            everything you share
-          </motion.span>
-        </motion.h1>
+            One link for{" "}
+            <motion.span
+              className="font-serif text-[1.06em] font-normal tracking-[-0.02em] text-accent block mt-1"
+              initial={reduce ? false : { opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.85, duration: 1, ease }}
+            >
+              everything you share
+            </motion.span>
+          </motion.h1>
 
-        <motion.p
-          variants={heroItem}
-          className="mt-5 max-w-[42ch] text-[clamp(0.98rem,2vw,1.1rem)] leading-[1.6] text-muted"
-        >
-          Links is your personal page in one URL — put your work, socials, and
-          offers in one place, track what people click, and keep full ownership
-          of your content.
-        </motion.p>
+          <motion.p
+            variants={heroItem}
+            className="mt-6 max-w-[42ch] text-[clamp(0.98rem,2vw,1.15rem)] leading-[1.6] text-muted lg:max-w-[38ch]"
+          >
+            Links is your personal page in one URL — put your work, socials, and
+            offers in one place, track what people click, and keep full ownership
+            of your content.
+          </motion.p>
 
-        <motion.div
-          id="waitlist"
-          variants={heroItem}
-          className="mt-9 w-full scroll-mt-28"
-        >
-          <WaitlistForm />
+          <motion.div
+            id="waitlist"
+            variants={heroItem}
+            className="mt-9 w-full scroll-mt-28 lg:max-w-[400px]"
+          >
+            <WaitlistForm />
+          </motion.div>
+
+          <motion.div
+            variants={heroItem}
+            className="mt-6 flex items-center gap-3"
+          >
+            <div className="flex -space-x-2.5" aria-hidden="true">
+              {avatars.map((avatar, i) => (
+                <motion.div
+                  key={avatar.src}
+                  initial={reduce ? false : { opacity: 0, x: -12 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 1.1 + i * 0.12, duration: 0.85, ease }}
+                >
+                  <Image
+                    src={avatar.src}
+                    alt={avatar.alt}
+                    width={28}
+                    height={28}
+                    className="size-7 rounded-full border-2 border-background object-cover"
+                  />
+                </motion.div>
+              ))}
+            </div>
+            <p className="text-[13px] tracking-[-0.01em] text-muted">
+              Join creators, brands &amp; builders
+            </p>
+          </motion.div>
         </motion.div>
 
+        {/* Right Column (Visual Mockup) */}
         <motion.div
-          variants={heroItem}
-          className="mt-6 flex items-center gap-3"
+          className="relative hidden flex-1 items-center justify-end lg:flex"
+          initial={reduce ? false : { opacity: 0, x: 40, filter: "blur(12px)" }}
+          animate={{ opacity: 1, x: 0, filter: "blur(0px)" }}
+          transition={{ delay: 0.4, duration: 1.2, ease }}
         >
-          <div className="flex -space-x-2.5" aria-hidden="true">
-            {avatars.map((avatar, i) => (
-              <motion.div
-                key={avatar.src}
-                initial={reduce ? false : { opacity: 0, x: -12 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 1.1 + i * 0.12, duration: 0.85, ease }}
-              >
-                <Image
-                  src={avatar.src}
-                  alt={avatar.alt}
-                  width={28}
-                  height={28}
-                  className="size-7 rounded-full border-2 border-background object-cover"
-                />
-              </motion.div>
-            ))}
-          </div>
-          <p className="text-[13px] tracking-[-0.01em] text-muted">
-            Join creators, brands &amp; builders
-          </p>
+          <motion.div
+            animate={reduce ? false : { y: [0, -12, 0] }}
+            transition={{
+              duration: 6,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+            className="relative w-full max-w-[620px]"
+          >
+            <Image
+              src="/hero-mockup-removebg-preview.png"
+              alt="Link in bio mobile interface mockup"
+              width={1024}
+              height={1024}
+              className="h-auto w-full object-contain"
+              priority
+            />
+          </motion.div>
         </motion.div>
-      </motion.div>
+      </div>
     </section>
   );
 }

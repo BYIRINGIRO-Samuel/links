@@ -39,7 +39,7 @@ export function SectionHeading({
         {accent ? (
           <>
             {" "}
-            <span className="font-serif font-normal tracking-[-0.02em] text-accent">
+            <span className="font-serif font-normal italic tracking-[-0.02em] text-accent">
               {accent}
             </span>
           </>

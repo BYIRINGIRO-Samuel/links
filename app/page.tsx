@@ -7,7 +7,7 @@ import { Hero } from "./components/hero";
 import { HowItWorks } from "./components/how-it-works";
 import { Navbar } from "./components/navbar";
 import { Pricing } from "./components/pricing";
-import { ProductPreview } from "./components/product-preview";
+import { EditorDemo } from "./components/editor-demo";
 
 export default function Home() {
   return (
@@ -16,7 +16,7 @@ export default function Home() {
       <Hero />
       <Countdown />
       <HowItWorks />
-      <ProductPreview />
+      <EditorDemo />
       <Comparison />
       <Pricing />
       <Faq />
