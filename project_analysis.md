@@ -33,7 +33,8 @@ This is the core directory of the Next.js App Router setup. It contains the main
   - `Hero`
   - `Countdown`
   - `HowItWorks`
-  - `ProductPreview`
+  - `EditorDemo`
+  - `ProductPreview` (or similar section)
   - `Comparison`
   - `Pricing`
   - `Faq`
@@ -49,6 +50,7 @@ Contains all the reusable UI blocks and layout sections used to assemble `page.t
 - **`hero.tsx`**: The main hero section at the top of the landing page, introducing the product.
 - **`countdown.tsx`**: A countdown timer section, likely used for a waitlist, product launch, or a limited-time offer.
 - **`how-it-works.tsx`**: Explains the steps or mechanics of using the Links app.
+- **`editor-demo.tsx`**: A newly added animated mockup component showing a live preview of the editor interface utilizing Framer Motion.
 - **`product-preview.tsx`**: Showcases what the product looks like (UI mockups).
 - **`comparison.tsx`**: Compares the product with alternatives, highlighting its unique value proposition.
 - **`pricing.tsx`**: Displays pricing tiers or plans.

@@ -52,7 +52,7 @@ const products = [
     featured: false,
   },
   {
-    name: "Liinks",
+    name: "links",
     short: "Li",
     values: [true, false, true, false, false, true, true, true, true, true],
     price: "$8 /mo",
@@ -106,11 +106,10 @@ export function Comparison() {
                     className="flex flex-col items-center gap-1.5 text-center"
                   >
                     <span
-                      className={`flex size-7 items-center justify-center rounded-full text-[10px] font-semibold sm:size-8 sm:text-[11px] ${
-                        product.featured
+                      className={`flex size-7 items-center justify-center rounded-full text-[10px] font-semibold sm:size-8 sm:text-[11px] ${product.featured
                           ? "bg-foreground text-white"
                           : "bg-[#e9ebe8] text-muted"
-                      }`}
+                        }`}
                     >
                       {product.featured ? (
                         <LinksMark />
@@ -119,9 +118,8 @@ export function Comparison() {
                       )}
                     </span>
                     <p
-                      className={`text-[10px] font-semibold leading-tight tracking-[-0.01em] sm:text-[12px] ${
-                        product.featured ? "text-foreground" : "text-muted"
-                      }`}
+                      className={`text-[10px] font-semibold leading-tight tracking-[-0.01em] sm:text-[12px] ${product.featured ? "text-foreground" : "text-muted"
+                        }`}
                     >
                       <span className="sm:hidden">{product.short}</span>
                       <span className="hidden sm:inline">{product.name}</span>
@@ -148,9 +146,8 @@ export function Comparison() {
                   {products.map((product) => (
                     <div
                       key={`${product.name}-${feature}`}
-                      className={`flex items-center justify-center rounded-lg py-1 ${
-                        product.featured ? "bg-accent/8" : ""
-                      }`}
+                      className={`flex items-center justify-center rounded-lg py-1 ${product.featured ? "bg-accent/8" : ""
+                        }`}
                     >
                       {product.values[rowIndex] ? (
                         <ThornTick size={15} />
@@ -171,9 +168,8 @@ export function Comparison() {
               {products.map((product) => (
                 <p
                   key={`${product.name}-price`}
-                  className={`flex items-center justify-center text-center text-[11px] font-semibold tracking-[-0.02em] sm:text-[13px] ${
-                    product.featured ? "text-accent" : "text-foreground"
-                  }`}
+                  className={`flex items-center justify-center text-center text-[11px] font-semibold tracking-[-0.02em] sm:text-[13px] ${product.featured ? "text-accent" : "text-foreground"
+                    }`}
                 >
                   {product.price}
                 </p>
