@@ -128,7 +128,7 @@ export function EditorDemo() {
               poster="/editor-demo-poster.jpg"
               className="h-full w-full object-cover object-top"
             >
-              <source src="/editor-demo.mp4" type="video/mp4" />
+              <source src="/video/demo.mp4" type="video/mp4" />
 
               Your browser does not support the video tag.
             </video>

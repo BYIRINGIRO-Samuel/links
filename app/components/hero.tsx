@@ -142,7 +142,7 @@ export function Hero() {
             className="relative w-full max-w-[620px]"
           >
             <Image
-              src="/hero-mockup-removebg-preview.png"
+              src="/hero-mockup-generated.jpg"
               alt="Link in bio mobile interface mockup"
               width={1024}
               height={1024}
