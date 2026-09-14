@@ -57,18 +57,6 @@ export function EditorDemo() {
         </p>
       </Reveal>
 
-      {/* Feature chips */}
-      <Reveal variant={fadeUp} className="mx-auto mb-8 flex max-w-3xl flex-wrap items-center justify-center gap-2">
-        {DEMO_FEATURES.map((f) => (
-          <span
-            key={f}
-            className="inline-flex items-center gap-1.5 rounded-full border border-black/8 bg-white px-3 py-1 text-[12px] font-medium text-black/60 shadow-xs"
-          >
-            <span className="size-1.5 rounded-full bg-accent/70" />
-            {f}
-          </span>
-        ))}
-      </Reveal>
 
       <div className="mx-auto max-w-[1100px]">
         {/* Browser Mockup */}
@@ -125,10 +113,10 @@ export function EditorDemo() {
             </button>
           </div>
 
-          {/* Video — exact 8:5 ratio matches 1280×800 recording */}
+          {/* Video — matches cropped recording (1376x658) */}
           <div
             className="relative w-full overflow-hidden bg-[#e5e5e5] cursor-pointer"
-            style={{ aspectRatio: "8/5" }}
+            style={{ aspectRatio: "1376/658" }}
             onClick={togglePlay}
           >
             <video
@@ -141,7 +129,7 @@ export function EditorDemo() {
               className="h-full w-full object-cover object-top"
             >
               <source src="/editor-demo.mp4" type="video/mp4" />
-              <source src="/editor-demo.webm" type="video/webm" />
+
               Your browser does not support the video tag.
             </video>
 
