@@ -26,14 +26,31 @@ export function WaitlistForm() {
       });
 
       if (!response.ok) {
-        throw new Error("Failed to join the waitlist");
+        let errorMsg = "Failed to join the waitlist";
+        try {
+          const data = await response.json();
+          if (data.message) {
+            errorMsg = data.message;
+          } else if (data.error) {
+            errorMsg = data.error;
+          }
+        } catch (e) {
+          // fallback to generic message if parsing fails
+        }
+        
+        // Handle 409 specifically if it doesn't give a good message
+        if (response.status === 409 && errorMsg === "Failed to join the waitlist") {
+          errorMsg = "You're already on the waitlist!";
+        }
+
+        throw new Error(errorMsg);
       }
 
       setStatus("joined");
-    } catch (error) {
+    } catch (error: any) {
       console.error("Waitlist error:", error);
       setStatus("error");
-      setErrorMessage("Something went wrong. Please try again.");
+      setErrorMessage(error.message || "Something went wrong. Please try again.");
     }
   }
 
