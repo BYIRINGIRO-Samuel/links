@@ -43,7 +43,9 @@ export function WaitlistForm() {
           errorMsg = "You're already on the waitlist!";
         }
 
-        throw new Error(errorMsg);
+        setStatus("error");
+        setErrorMessage(errorMsg);
+        return;
       }
 
       setStatus("joined");
